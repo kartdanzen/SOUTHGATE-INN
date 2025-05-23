@@ -1,0 +1,1090 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 40px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    height: 80px;
+}
+
+/* The navbar-related styles have been moved to navbar.css */
+
+body.menu-open {
+    overflow: hidden;
+}
+
+/* Event Sections Styles */
+.events-hero {
+    position: relative;
+    height: 600px;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/magaso2.jpg");
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.hero-content {
+    max-width: 900px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.events-hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 20px;
+    text-shadow: 
+        0 0 5px rgba(255, 255, 255, 0.5),
+        0 0 10px rgba(255, 255, 255, 0.3),
+        0 0 15px rgba(255, 255, 255, 0.2),
+        0 0 20px rgba(0, 102, 82, 0.2),
+        0 0 30px rgba(0, 102, 82, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.3);
+    animation: eventGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes eventGlow {
+    from {
+        text-shadow: 
+            0 0 5px rgba(255, 255, 255, 0.5),
+            0 0 10px rgba(255, 255, 255, 0.3),
+            0 0 15px rgba(255, 255, 255, 0.2),
+            0 0 20px rgba(0, 102, 82, 0.2),
+            0 0 30px rgba(0, 102, 82, 0.1),
+            0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    to {
+        text-shadow: 
+            0 0 10px rgba(255, 255, 255, 0.6),
+            0 0 20px rgba(255, 255, 255, 0.4),
+            0 0 30px rgba(255, 255, 255, 0.3),
+            0 0 40px rgba(0, 102, 82, 0.3),
+            0 0 50px rgba(0, 102, 82, 0.2),
+            0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+}
+
+.events-hero-subtitle {
+    font-size: 18px;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Event Types */
+.event-types-container {
+    padding: 50px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 36px;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 20px;
+    color: #333;
+    position: relative;
+}
+
+.section-title:after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: #006652;
+    margin: 15px auto 0;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 18px;
+    max-width: 700px;
+    margin: 0 auto 60px;
+    line-height: 1.6;
+}
+
+.event-types-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 0 20px;
+}
+
+.event-type-card {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+
+.event-type-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.event-type-tag {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #006652;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    z-index: 2;
+}
+
+.event-type-img-container {
+    height: 200px;
+    overflow: hidden;
+}
+
+.event-type-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.event-type-card:hover .event-type-img {
+    transform: scale(1.1);
+}
+
+.event-type-content {
+    padding: 25px;
+}
+
+.event-type-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+    font-family: 'Playfair Display', serif;
+}
+
+.event-type-description {
+    color: #666;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    height: 96px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+.event-type-price {
+    color: #006652;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.event-buttons {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.event-view-btn {
+    display: inline-block;
+    background-color: transparent;
+    color: #006652;
+    padding: 12px 15px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-align: center;
+    border: 2px solid #006652;
+    flex: 1;
+}
+
+.event-view-btn:hover {
+    background-color: rgba(0, 102, 82, 0.1);
+    transform: translateY(-3px);
+}
+
+.event-type-btn {
+    display: inline-block;
+    background-color: #006652;
+    color: white;
+    padding: 12px 15px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-align: center;
+    flex: 1;
+}
+
+.event-type-btn:hover {
+    background-color: #004d3d;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,102,82,0.2);
+}
+
+/* Booking Section */
+.booking-section {
+    padding: 80px 0;
+    background-color: #f9f9f9;
+}
+
+.booking-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.booking-form {
+    background-color: white;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.form-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.form-steps:before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #e0e0e0;
+    z-index: 0;
+}
+
+.form-steps[data-step="1"]:after {
+    width: 0%;
+}
+
+.form-steps[data-step="2"]:after {
+    width: 50%;
+}
+
+.form-steps[data-step="3"]:after {
+    width: 100%;
+}
+
+.form-steps:after {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 0;
+    height: 2px;
+    background-color: #006652;
+    z-index: 0;
+    transition: width 0.3s ease;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.step-number {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.step.active .step-number {
+    background-color: #006652;
+}
+
+.step.completed .step-number {
+    background-color: #006652;
+}
+
+.step-label {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.step.active .step-label {
+    color: #006652;
+    font-weight: 600;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #444;
+    font-size: 14px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #006652;
+    box-shadow: 0 0 0 3px rgba(0,102,82,0.1);
+}
+
+/* Date Unavailable Alert */
+.date-alert {
+    display: none;
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    border-radius: 6px;
+    padding: 12px 15px;
+    margin-top: 10px;
+    font-size: 14px;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.date-alert.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+}
+
+.date-alert.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border-color: #ffeeba;
+}
+
+.date-alert i {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.date-alert-close {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: inherit;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.date-alert-close:hover {
+    opacity: 1;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.submit-btn {
+    background-color: #006652;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.submit-btn:hover {
+    background-color: #004d3d;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,102,82,0.2);
+}
+
+@media (max-width: 768px) {
+    .events-hero {
+        height: 450px;
+    }
+    
+    .events-hero-title {
+        font-size: 42px;
+        text-shadow: 
+            0 0 5px rgba(255, 255, 255, 0.5),
+            0 0 10px rgba(255, 255, 255, 0.2),
+            0 0 15px rgba(0, 102, 82, 0.1),
+            0 2px 4px rgba(0, 0, 0, 0.3);
+        animation: none;
+    }
+    
+    .events-hero-subtitle {
+        font-size: 16px;
+    }
+    
+    .event-types-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        flex-direction: column;
+    }
+    
+    .booking-form {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .events-hero {
+        height: 350px;
+    }
+    
+    .events-hero-title {
+        font-size: 32px;
+        text-shadow: 
+            0 0 5px rgba(255, 255, 255, 0.4),
+            0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Improved Confirmation Popup Styling */
+.confirmation-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.confirmation-popup.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Modern popup content styles */
+.confirmation-content, .popup-content {
+    background-color: #fff;
+    max-width: 85%;
+    width: 550px; /* Slightly reduced width */
+    border-radius: 18px; /* More rounded corners */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    position: relative;
+    overflow: hidden;
+    transform: scale(0.95);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    animation: popIn 0.4s ease forwards;
+    border: 1px solid rgba(0, 102, 82, 0.15); /* Subtle border */
+}
+
+/* Enhanced Header section styling */
+.popup-header {
+    padding: 18px 24px;
+    background: linear-gradient(135deg, #006652 0%, #00866c 100%); /* Gradient background */
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.popup-title {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+}
+
+.popup-close-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.popup-close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+/* Enhanced Body section styling */
+.popup-body {
+    padding: 0;
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Add content padding */
+.popup-content-inner {
+    padding: 10px 28px 30px;
+    margin: 15px 0;
+}
+
+/* Enhanced success icon */
+.success-icon {
+    font-size: 80px;
+    color: #4CAF50;
+    margin: 10px auto 30px;
+    text-align: center;
+    animation: scaleIn 0.5s ease forwards;
+}
+
+.success-icon i {
+    display: inline-block;
+    background: linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%); /* Gradient background */
+    color: white;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    box-shadow: 0 10px 25px rgba(76, 175, 80, 0.4);
+    position: relative;
+    overflow: hidden;
+    animation: checkmark 0.8s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+/* Modernized success title */
+.success-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin: 0 0 20px;
+    color: #333;
+    text-align: center;
+    animation: fadeInUp 0.5s ease 0.3s both;
+}
+
+/* Enhanced success message */
+.success-message {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    text-align: center;
+    animation: fadeInUp 0.5s ease 0.5s both;
+}
+
+/* Modern booking details box */
+.booking-details {
+    background: linear-gradient(to bottom, #f8f9fa, #f1f3f5); /* Subtle gradient */
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+    border: 1px solid #eee;
+    text-align: left;
+    animation: fadeInUp 0.5s ease 0.7s both;
+    transform-origin: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05), 0 3px 5px rgba(0,0,0,0.02);
+}
+
+.booking-details h4 {
+    color: #006652;
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.booking-details h4:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, #006652, #4CAF50);
+    border-radius: 3px;
+}
+
+.booking-details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.booking-details-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    font-size: 15px;
+    opacity: 0;
+    animation: fadeInRight 0.4s ease forwards;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.booking-details-list li strong {
+    color: #555;
+    font-weight: 600;
+}
+
+.booking-details-list li span {
+    color: #006652;
+    font-weight: 500;
+    background-color: rgba(0, 102, 82, 0.08);
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+/* Improved button styling */
+.popup-action-container {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#booking-success-btn {
+    background: linear-gradient(135deg, #006652 0%, #00866c 100%);
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 102, 82, 0.3);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.5s ease 1.2s both;
+    outline: none;
+}
+
+#booking-success-btn:hover {
+    box-shadow: 0 8px 20px rgba(0, 102, 82, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Animation styles */
+.confirmation-popup.active .confirmation-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Desktop specific styles */
+@media (min-width: 992px) {
+    .popup-body {
+        max-height: 70vh;
+    }
+    
+    .popup-image-container {
+        height: 220px;
+    }
+    
+    .popup-event-img {
+        height: 100%;
+    }
+    
+    .popup-event-title {
+        font-size: 1.8rem;
+    }
+    
+    .popup-event-price {
+        font-size: 1.3rem;
+    }
+    
+    .popup-event-description {
+        font-size: 1.05rem;
+    }
+    
+    .popup-features {
+        padding: 20px;
+    }
+    
+    .popup-event-features {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .popup-action-container {
+        margin-top: 12px;
+    }
+    
+    .popup-book-btn {
+        padding: 14px 30px;
+    }
+}
+
+/* Tablet specific styles */
+@media (max-width: 991px) {
+    .popup-body {
+        padding: 16px 20px;
+    }
+    
+    .popup-image-container {
+        height: 180px;
+    }
+    
+    .popup-event-img {
+        height: 100%;
+    }
+    
+    .popup-book-btn {
+        width: 100%;
+    }
+}
+
+/* Mobile specific styles */
+@media (max-width: 767px) {
+    .confirmation-content, .popup-content {
+        max-width: 90%;
+        width: 100%;
+    }
+    
+    .popup-body {
+        padding: 14px 16px;
+    }
+    
+    .popup-image-container {
+        height: 150px;
+    }
+    
+    .popup-event-img {
+        height: 100%;
+    }
+    
+    .popup-event-features {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Small mobile specific styles */
+@media (max-width: 480px) {
+    .popup-image-container {
+        height: 130px;
+    }
+    
+    .popup-event-img {
+        height: 100%;
+    }
+    
+    .popup-event-title {
+        font-size: 1.4rem;
+    }
+    
+    .popup-event-price {
+        font-size: 1.1rem;
+    }
+    
+    .popup-event-description {
+        font-size: 0.95rem;
+    }
+    
+    .popup-features {
+        padding: 12px;
+    }
+    
+    .popup-features h4 {
+        font-size: 1rem;
+    }
+    
+    .popup-event-features li {
+        font-size: 0.9rem;
+    }
+    
+    .popup-book-btn {
+        padding: 10px 20px;
+        font-size: 0.95rem;
+    }
+}
+
+/* Animation for popup appearance and exit */
+.confirmation-popup.active .popup-content {
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.confirmation-popup.exiting .popup-content {
+    animation: popOut 0.3s ease forwards;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes popOut {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Event details styling */
+.popup-image-container {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 8px;
+    position: relative;
+    margin-bottom: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    background-color: #f3f3f3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.popup-image-container::before {
+    content: attr(data-event-type);
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, #006652 0%, #00866c 100%);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    z-index: 10;
+    text-transform: uppercase;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    letter-spacing: 0.5px;
+}
+
+.popup-event-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    filter: brightness(0.95);
+}
+
+.popup-event-title {
+    font-size: 1.8rem;
+    color: #333;
+    margin: 15px 0 8px;
+    font-weight: 600;
+    font-family: 'Playfair Display', serif;
+}
+
+.popup-event-price {
+    font-size: 1.4rem;
+    color: #006652;
+    margin: 0 0 15px;
+    font-weight: 600;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    position: relative;
+}
+
+.popup-event-price::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, #006652, #4CAF50);
+    border-radius: 3px;
+}
+
+.popup-event-description {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.popup-features {
+    background: linear-gradient(to bottom, #f8f9fa, #f1f3f5);
+    padding: 20px 28px;
+    margin: 0 24px 20px;
+    border-radius: 12px;
+    border-left: 3px solid #006652;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+.popup-features h4 {
+    margin: 0 0 15px;
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.popup-event-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.popup-event-features li {
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    color: #444;
+    display: flex;
+    align-items: center;
+    background-color: rgba(255,255,255,0.7);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.popup-event-features li:hover {
+    background-color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+}
+
+.popup-event-features li i {
+    color: #4CAF50;
+    margin-right: 10px;
+    font-size: 1rem;
+}
+
+.popup-book-btn {
+    background: linear-gradient(135deg, #006652 0%, #00866c 100%);
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 102, 82, 0.3);
+    position: relative;
+    overflow: hidden;
+    outline: none;
+}
+
+.popup-book-btn:hover {
+    box-shadow: 0 8px 20px rgba(0, 102, 82, 0.4);
+    transform: translateY(-2px);
+}
+
+.popup-book-btn:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: -100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: 0.4s;
+}
+
+.popup-book-btn:hover:after {
+    left: 100%;
+}
+

@@ -15,13 +15,13 @@
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
     <!-- Header -->
     <header class="header">
         @include('nav')
     </header>
-    <div class="menu-overlay"></div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -430,5 +430,6 @@
     <!-- JavaScript -->
     <script src="{{ asset('js/navbar.js') }}"></script>
     <script src="{{ asset('js/index.room.js') }}"></script>
+    <script src="{{ asset('js/index.event.js') }}"></script>
 </body>
 </html>

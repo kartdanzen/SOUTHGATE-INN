@@ -12,6 +12,7 @@
         <i class="fas fa-blog"></i>BLOG
         <span class="hover-bg"></span>
         <span class="ripple"></span>
+        <span class="ripple"></span>
         @if(request()->routeIs('blog'))<span class="underline"></span>@endif
     </a>
     <a href="{{ route('room') }}" class="nav-item {{ request()->routeIs('room') ? 'active' : '' }}">

@@ -51,6 +51,98 @@ document.addEventListener('DOMContentLoaded', function() {
     // Call the function to set up date filters
     setupDateFilters();
     
+    // Terms and Conditions Modal Functionality
+    const termsModal = document.querySelector('.terms-modal');
+    const termsLinks = document.querySelectorAll('.terms-link');
+    const termsCloseBtn = document.querySelector('.terms-close-btn');
+    const termsAcceptBtn = document.querySelector('.terms-accept-btn');
+    
+    // Log whether elements were found
+    console.log('Terms modal found:', termsModal ? 'Yes' : 'No');
+    console.log('Terms links found:', termsLinks.length);
+    console.log('Terms close button found:', termsCloseBtn ? 'Yes' : 'No');
+    console.log('Terms accept button found:', termsAcceptBtn ? 'Yes' : 'No');
+    
+    // Open terms modal function
+    function openTermsModal() {
+        if (!termsModal) {
+            console.error('Terms modal element not found');
+            return;
+        }
+        
+        console.log('Opening terms modal');
+        termsModal.style.display = 'flex';
+        
+        // Force reflow before adding active class for smooth animation
+        void termsModal.offsetWidth;
+        
+        termsModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    // Close terms modal function
+    function closeTermsModal() {
+        if (!termsModal) return;
+        
+        console.log('Closing terms modal');
+        termsModal.classList.remove('active');
+        
+        // Wait for animation to complete before hiding
+        setTimeout(() => {
+            if (!termsModal.classList.contains('active')) {
+                termsModal.style.display = 'none';
+            }
+            document.body.style.overflow = '';
+        }, 300);
+    }
+    
+    // Make functions globally available
+    window.openTermsModal = openTermsModal;
+    window.closeTermsModal = closeTermsModal;
+    
+    // Add click event listeners to all terms links
+    termsLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Terms link clicked');
+            openTermsModal();
+        });
+    });
+    
+    // Close button functionality
+    if (termsCloseBtn) {
+        termsCloseBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            closeTermsModal();
+        });
+    }
+    
+    // Accept button functionality
+    if (termsAcceptBtn) {
+        termsAcceptBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Check the terms checkbox
+            const termsCheckbox = document.querySelector('input[name="terms_agreement"]');
+            if (termsCheckbox) {
+                termsCheckbox.checked = true;
+                console.log('Terms checkbox checked');
+            }
+            
+            closeTermsModal();
+        });
+    }
+    
+    // Close when clicking outside modal content
+    if (termsModal) {
+        termsModal.addEventListener('click', function(e) {
+            if (e.target === termsModal) {
+                closeTermsModal();
+            }
+        });
+    }
+    
     // Handle Search Availability button click
     const applyFiltersBtn = document.getElementById('apply-filters');
     if (applyFiltersBtn) {
@@ -438,19 +530,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Add our clean listener
         newSecondaryBtn.addEventListener('click', closeConfirmation);
-    }
-    
-    // Handle overlay click events
-    if (bookingOverlay) {
-        bookingOverlay.addEventListener('click', function(e) {
-            if (e.target === bookingOverlay) {
-                if (confirmationPopup.classList.contains('active')) {
-                closeConfirmation();
-                } else if (bookingModal.classList.contains('active')) {
-                    closeBookingModal();
-                }
-            }
-        });
     }
     
     // Back button functionality

@@ -19,10 +19,10 @@ class RoomController extends Controller
         $totalPrice = $request->query('totalPrice');
         $duration = $request->query('duration');
         $autoOpen = $request->query('autoOpen');
-        
+
         // Use nightly price if available, otherwise default value
         $price = $nightlyPrice ?: ($request->query('price') ?: '2500');
-        
+
         // Pass these parameters to the view
         return view('room', [
             'roomType' => $roomType,
@@ -133,7 +133,7 @@ class RoomController extends Controller
                 'features' => ['1 Queen Bed + 2 Twin Beds', 'Free High-Speed WiFi', 'Air Conditioning', 'Separate Living Area']
             ],
             [
-                'name' => 'Standard Deluxe',
+                'name' => 'Standard Room',
                 'price' => '₱1,900',
                 'image' => asset('rooms/featured room.jpg'),
                 'features' => ['1 Queen Bed + 2 Twin Beds', 'Free High-Speed WiFi', 'Air Conditioning', 'Garden View']

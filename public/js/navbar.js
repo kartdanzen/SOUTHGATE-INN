@@ -29,6 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (menuOverlay) {
             // Reset body overflow FIRST before any other actions
             document.body.style.overflow = '';
+            menuOverlay.style.opacity = '0';
+            menuOverlay.style.visibility = 'hidden';
             
             setTimeout(() => {
                 if (!menuOverlay.classList.contains('active')) {
@@ -44,7 +46,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = '';
         
         if (menuToggle) menuToggle.classList.remove('active');
-        if (nav) nav.classList.remove('open');
+        if (nav) {
+            nav.style.right = '-100%';
+            nav.classList.remove('open');
+        }
         if (menuOverlay) {
             menuOverlay.classList.remove('active');
             forceHideOverlay();
@@ -57,29 +62,45 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             e.stopPropagation();
             console.log('Menu toggle clicked');
+            
+            const isOpening = !this.classList.contains('active');
             this.classList.toggle('active');
             
             if (nav) {
-                nav.classList.toggle('open');
+                if (isOpening) {
+                    nav.style.display = 'flex';
+                    // Force a reflow
+                    nav.offsetHeight;
+                    nav.classList.add('open');
+                    nav.style.right = '0';
+                } else {
+                    nav.classList.remove('open');
+                    nav.style.right = '-100%';
+                }
                 console.log('Nav toggled:', nav.classList.contains('open'));
             }
             
             if (menuOverlay) {
-                menuOverlay.classList.toggle('active');
-                
-                // Force display property based on active state
-                if (menuOverlay.classList.contains('active')) {
+                if (isOpening) {
+                    menuOverlay.style.display = 'block';
+                    // Force a reflow
+                    menuOverlay.offsetHeight;
+                    menuOverlay.classList.add('active');
                     forceShowOverlay();
                 } else {
-                    // Explicitly reset overflow when closing menu
-                    document.body.style.overflow = '';
+                    menuOverlay.classList.remove('active');
                     forceHideOverlay();
                 }
-                
                 console.log('Overlay toggled:', menuOverlay.classList.contains('active'));
             }
             
             document.body.classList.toggle('menu-open');
+            
+            if (isOpening) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
         });
     }
     
@@ -183,13 +204,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Make sure missing elements are created if they don't exist
-    ensureMobileMenuElements();
+    // Only create menu-overlay if there isn't one already in the DOM
+    if (!menuOverlay) {
+        ensureMobileMenuElements();
+    }
     
     // Function to ensure all mobile menu elements exist
     function ensureMobileMenuElements() {
-        // Ensure menu overlay exists
-        if (!menuOverlay && document.body) {
+        // Only create a new menu overlay if there isn't one
+        if (!document.querySelector('.menu-overlay') && document.body) {
             console.log('Creating missing menu overlay');
             const overlay = document.createElement('div');
             overlay.className = 'menu-overlay';
@@ -202,6 +225,9 @@ document.addEventListener('DOMContentLoaded', function() {
             overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
             overlay.style.zIndex = '999';
             overlay.style.backdropFilter = 'blur(3px)';
+            overlay.style.opacity = '0';
+            overlay.style.visibility = 'hidden';
+            overlay.style.transition = 'opacity 0.3s ease, visibility 0.3s ease';
             
             document.body.appendChild(overlay);
             
@@ -212,9 +238,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }
-        
-        // We're removing the code that creates the close button
-        // The hamburger menu icon will transform into an X when clicked
     }
     
     // Prevent the overflow hidden issue by checking and fixing on page load

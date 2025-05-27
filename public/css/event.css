@@ -1088,3 +1088,18 @@ textarea.form-control {
     left: 100%;
 }
 
+/* Terms and Conditions */
+.terms-conditions {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.terms-conditions a {
+    color: #006652;
+    text-decoration: none;
+}
+
+.terms-conditions a:hover {
+    text-decoration: underline;
+}
+

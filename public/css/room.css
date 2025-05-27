@@ -885,10 +885,13 @@ body.menu-open {
 .terms-link {
     color: #006652;
     text-decoration: underline;
+    cursor: pointer;
+    font-weight: 500;
 }
 
 .terms-link:hover {
     color: #004d3d;
+    text-decoration: underline;
 }
 
 .form-actions {
@@ -1121,7 +1124,177 @@ body.menu-open {
 }
 
 @keyframes highlight-pulse {
-    0% { box-shadow: 0 0 0 0 rgba(0, 102, 82, 0); }
-    50% { box-shadow: 0 0 20px 5px rgba(0, 102, 82, 0.5); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 102, 82, 0); }
+    0% { background-color: rgba(0, 102, 82, 0.05); }
+    50% { background-color: rgba(0, 102, 82, 0.15); }
+    100% { background-color: rgba(0, 102, 82, 0.05); }
+}
+
+/* Terms and Conditions Modal */
+.terms-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999; /* Highest z-index */
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+}
+
+.terms-modal.active {
+    display: flex !important;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.terms-content {
+    width: 90%;
+    max-width: 800px;
+    max-height: 85vh;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    animation: modalFadeIn 0.5s forwards;
+    transform: translateY(20px);
+    z-index: 10000;
+    margin: 0 auto;
+}
+
+@keyframes modalFadeIn {
+    to {
+        transform: translateY(0);
+    }
+}
+
+.terms-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #666;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.terms-close-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.terms-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: #006652;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.terms-body {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 15px;
+    margin-bottom: 20px;
+    max-height: 50vh;
+}
+
+.terms-section {
+    margin-bottom: 24px;
+}
+
+.terms-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.terms-section p {
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555;
+}
+
+.terms-footer {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.terms-footer p {
+    color: #888;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.terms-accept-btn {
+    background-color: #006652;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.terms-accept-btn:hover {
+    background-color: #00543f;
+}
+
+@media (max-width: 600px) {
+    .terms-content {
+        padding: 20px;
+    }
+
+    .terms-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .terms-body {
+        max-height: 60vh;
+    }
+}
+
+/* Customize scrollbar for terms modal */
+.terms-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terms-body::-webkit-scrollbar-track {
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+
+.terms-body::-webkit-scrollbar-thumb {
+    background-color: #c0c0c0;
+    border-radius: 10px;
+}
+
+.terms-body::-webkit-scrollbar-thumb:hover {
+    background-color: #a0a0a0;
 }

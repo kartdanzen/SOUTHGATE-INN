@@ -500,6 +500,13 @@ document.addEventListener('DOMContentLoaded', function() {
         bookingForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
+            // Check if terms checkbox is checked
+            const termsCheckbox = document.querySelector('input[name="terms_agreement"]');
+            if (termsCheckbox && !termsCheckbox.checked) {
+                alert('Please agree to the terms and conditions to proceed.');
+                return;
+            }
+
             // Show loading state
             const submitBtn = bookingForm.querySelector('.submit-btn');
             const originalBtnText = submitBtn.textContent;
@@ -634,8 +641,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // If we have a hash in the URL for booking section, scroll to it
                 if (window.location.hash === '#booking-form' || window.location.hash === '#bookingSection') {
-                    document.getElementById('bookingSection').scrollIntoView({ behavior: 'smooth' });
+                    setTimeout(() => {
+                        document.getElementById('bookingSection').scrollIntoView({ behavior: 'smooth' });
+                    }, 500);
                 }
+            }
+        } else {
+            console.warn(`Event type '${eventType}' not found in event data`);
+            // For 'other' value that may not be in eventTypes object
+            const eventTypeSelect = document.getElementById('eventType');
+            if (eventTypeSelect && eventType === 'other') {
+                eventTypeSelect.value = 'other';
             }
         }
     }

@@ -16,7 +16,7 @@ class EventController extends Controller
     /**
      * Store a new event booking in the database.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request   
      * @return \Illuminate\Http\JsonResponse
      */
     public function storeBooking(Request $request)
@@ -30,6 +30,7 @@ class EventController extends Controller
             'email' => 'required|email|max:255',
             'phoneNumber' => 'required|string|max:20',
             'specialRequests' => 'nullable|string',
+            'terms_agreement' => 'required|accepted',
         ]);
         
         // Calculate base price based on event type and guest count
@@ -86,30 +87,6 @@ class EventController extends Controller
         
         // Get base price for event type
         $price = $basePrices[$eventType] ?? 30000;
-        
-        // Add per-guest surcharge for events with more than standard guests
-        $standardGuestCount = [
-            'wedding' => 100,
-            'birthday' => 50,
-            'corporate' => 75,
-            'reunion' => 80,
-            'other' => 60,
-        ];
-        
-        $extraGuests = max(0, $guestCount - ($standardGuestCount[$eventType] ?? 60));
-        
-        if ($extraGuests > 0) {
-            // Add surcharge per extra guest (different rates by event type)
-            $surchargeRates = [
-                'wedding' => 500, 
-                'birthday' => 300,
-                'corporate' => 350,
-                'reunion' => 400,
-                'other' => 300,
-            ];
-            
-            $price += $extraGuests * ($surchargeRates[$eventType] ?? 300);
-        }
         
         return $price;
     }

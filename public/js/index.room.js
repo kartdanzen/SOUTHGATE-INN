@@ -7,61 +7,61 @@ document.addEventListener('DOMContentLoaded', function() {
         const day = String(date.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
     };
-    
+
     // Reset date inputs to current date
     function resetDateInputs() {
         const checkInInput = document.getElementById('check-in');
         const checkOutInput = document.getElementById('check-out');
-        
+
         if (checkInInput && checkOutInput) {
             // Get fresh current date to ensure it's today
             const currentDate = new Date();
             const nextDate = new Date(currentDate);
             nextDate.setDate(currentDate.getDate() + 3);
-            
+
             // Set check-in to today
             checkInInput.value = formatDate(currentDate);
             checkInInput.min = formatDate(currentDate);
-            
+
             // Set check-out to today + 3
             checkOutInput.value = formatDate(nextDate);
-            
+
             // Set check-out minimum to tomorrow
             const tomorrow = new Date(currentDate);
             tomorrow.setDate(currentDate.getDate() + 1);
             checkOutInput.min = formatDate(tomorrow);
         }
     }
-    
+
     // Reset dates on page load
     resetDateInputs();
-    
+
     // Set up event listener for check-in date changes
     const checkInInput = document.getElementById('check-in');
     const checkOutInput = document.getElementById('check-out');
-    
+
     if (checkInInput && checkOutInput) {
         checkInInput.addEventListener('change', function() {
             const checkInDate = new Date(this.value);
             const nextDay = new Date(checkInDate);
             nextDay.setDate(checkInDate.getDate() + 1);
-            
+
             // Update minimum checkout date
             checkOutInput.min = formatDate(nextDay);
-            
+
             // If current checkout date is now invalid, update it
             if (new Date(checkOutInput.value) <= checkInDate) {
                 checkOutInput.value = formatDate(nextDay);
             }
         });
     }
-    
+
     // Room availability popup
     const bookingForm = document.getElementById('booking-form');
     const availabilityPopup = document.getElementById('availability-popup');
     const popupClose = document.getElementById('popup-close');
     const availableRoomsContainer = document.querySelector('.available-rooms');
-    
+
     // Sample room data
     const roomsData = [
         {
@@ -93,6 +93,13 @@ document.addEventListener('DOMContentLoaded', function() {
             link: "/room?type=superior"
         },
         {
+            name: "Family Deluxe",
+            price: "₱2,500/night",
+            image: "rooms/DELUXE ROOM.jpg",
+            features: "1 Queen Bed • Free WiFi • Air Conditioning",
+            link: "/room?type=family deluxe"
+        },
+        {
             name: "Single Room",
             price: "₱1,700/night",
             image: "rooms/room4.jpg",
@@ -100,15 +107,15 @@ document.addEventListener('DOMContentLoaded', function() {
             link: "/room?type=single"
         }
     ];
-    
+
     // Helper function to generate amenity icons
     function generateAmenityIcons(featuresString) {
         const features = featuresString.split('•').map(f => f.trim()).filter(f => f);
         let iconsHTML = '';
-        
+
         features.forEach(feature => {
             let icon = 'fa-star';
-            
+
             if (feature.includes('Queen Bed') || feature.includes('King Bed')) {
                 icon = 'fa-bed';
             } else if (feature.includes('WiFi')) {
@@ -120,25 +127,25 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (feature.includes('Bathtub') || feature.includes('Jacuzzi')) {
                 icon = 'fa-bath';
             }
-            
+
             iconsHTML += `<div class="amenity"><i class="fas ${icon}"></i>${feature}</div>`;
         });
-        
+
         return iconsHTML;
     }
-    
+
     function generateRoomCards() {
         availableRoomsContainer.innerHTML = '';
-        
+
         // Calculate stay duration
         const checkIn = new Date(document.getElementById('check-in').value);
         const checkOut = new Date(document.getElementById('check-out').value);
         const stayDuration = Math.floor((checkOut - checkIn) / (1000 * 60 * 60 * 24));
-        
+
         // Simulate checking room availability based on dates
         const isWeekend = checkIn.getDay() === 0 || checkIn.getDay() === 6;
         const noRoomsAvailable = isWeekend;
-        
+
         if (noRoomsAvailable) {
             // Display no availability message
             const noRoomsMessage = document.createElement('div');
@@ -149,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <button class="try-other-dates" id="try-other-dates">Try Different Dates</button>
             `;
             availableRoomsContainer.appendChild(noRoomsMessage);
-            
+
             // Add event listener to the button
             setTimeout(() => {
                 document.getElementById('try-other-dates').addEventListener('click', function() {
@@ -161,15 +168,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     }, 400);
                 });
             }, 0);
-            
+
             return;
         }
-        
+
         // Filter available rooms
         roomsData.forEach(room => {
             const roomCard = document.createElement('div');
             roomCard.className = 'room-card';
-            
+
             roomCard.innerHTML = `
                 <a href="${room.link}" class="room-image-link">
                     <img src="${room.image}" alt="${room.name}" class="room-image">
@@ -186,18 +193,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     <a href="${room.link}" class="room-select"><i class="fas fa-check-circle"></i> SELECT ROOM</a>
                 </div>
             `;
-            
+
             availableRoomsContainer.appendChild(roomCard);
         });
     }
-    
+
     if (bookingForm) {
         bookingForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             // Get form data
             const formData = new FormData(this);
-            
+
             // Submit form using fetch
             fetch(this.action, {
                 method: 'POST',
@@ -211,19 +218,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.status === 'success') {
                     // Clear previous room cards
                     availableRoomsContainer.innerHTML = '';
-                    
+
                     // Add available rooms to the popup
                     data.available_rooms.forEach(room => {
                         const roomCard = document.createElement('div');
                         roomCard.className = 'room-card';
-                        
+
                         // Create a proper URL-friendly room type for routing
                         let roomType = room.name.toLowerCase().replace(/\s+/g, '-');
-                        
+
                         // Handle specific room types to match expected URL patterns
                         if (room.name === 'Family Deluxe') {
                             roomType = 'family';
-                        } else if (room.name === 'Standard Deluxe') {
+                        } else if (room.name === 'Standard Room') {
                             roomType = 'standard';
                         } else if (room.name === 'Suite Room') {
                             roomType = 'suite';
@@ -234,10 +241,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         } else if (room.name === 'Superior Room') {
                             roomType = 'superior';
                         }
-                        
+
                         const roomLink = `/room?type=${roomType}`;
-                        
-                        roomCard.innerHTML = 
+
+                        roomCard.innerHTML =
                             '<a href="' + roomLink + '" class="room-image-link">' +
                                 '<img src="' + room.image + '" alt="' + room.name + '" class="room-image">' +
                             '</a>' +
@@ -247,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     '<span>' + room.price + '<span class="night-rate">/night</span></span>' +
                                 '</div>' +
                                 '<div class="room-features">' +
-                                    room.features.map(feature => 
+                                    room.features.map(feature =>
                                         '<div class="amenity"><i class="fas fa-check"></i>' + feature + '</div>'
                                     ).join('') +
                                 '</div>' +
@@ -255,10 +262,10 @@ document.addEventListener('DOMContentLoaded', function() {
                                     '<i class="fas fa-check-circle"></i> SELECT ROOM' +
                                 '</a>' +
                             '</div>';
-                        
+
                         availableRoomsContainer.appendChild(roomCard);
                     });
-                    
+
                     // Show the popup
                     availabilityPopup.classList.add('active');
                     document.body.classList.add('menu-open');
@@ -273,14 +280,14 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-    
+
     if (popupClose) {
         popupClose.addEventListener('click', function() {
             availabilityPopup.classList.remove('active');
             document.body.classList.remove('menu-open');
         });
     }
-    
+
     // Close popup when clicking outside of it
     if (availabilityPopup) {
         availabilityPopup.addEventListener('click', function(e) {
@@ -290,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+
     // Room Selection Modal
     const roomModal = document.getElementById('room-selection-modal');
     const modalClose = document.getElementById('modal-close');
@@ -303,7 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const proceedBtn = document.getElementById('proceed-btn');
     const viewOtherBtn = document.getElementById('view-other-btn');
     const cancelBtn = document.getElementById('cancel-btn');
-    
+
     // Room details data
     const roomDetailsData = {
         "Deluxe Room": {
@@ -349,7 +356,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ]
         },
 
-     "Standard Deluxe": {
+     "Standard Room": {
         image: "rooms/featured room.jpg",
         price: "₱1,900/night",
         description: "Specially designed for families, our Family Suite offers ample space and comfort for both parents and children. The suite features a master bedroom with a queen bed and a separate area with twin beds, making it perfect for a family getaway. Enjoy quality time together in the spacious living area with comfortable seating and entertainment options.",
@@ -433,39 +440,39 @@ document.addEventListener('DOMContentLoaded', function() {
             ]
         }
     };
-    
+
     // Function to show the modal with the selected room details
     function showRoomModal(roomData, checkIn, checkOut, duration) {
         // Format dates for display
         const checkInDate = new Date(checkIn);
         const checkOutDate = new Date(checkOut);
-        const formattedCheckIn = checkInDate.toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
+        const formattedCheckIn = checkInDate.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
         });
-        const formattedCheckOut = checkOutDate.toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
+        const formattedCheckOut = checkOutDate.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
         });
-        
+
         // Calculate total price
         const price = parseInt(roomData.price.replace(/[^\d]/g, ''));
         const totalPrice = price * duration;
-        
+
         // Update modal content
         modalRoomType.textContent = roomData.name;
         modalCheckin.textContent = formattedCheckIn;
         modalCheckout.textContent = formattedCheckOut;
         modalDuration.textContent = `${duration} Night${duration > 1 ? 's' : ''}`;
         modalPrice.textContent = `₱${totalPrice.toLocaleString()}`;
-        
+
         // Update room image
         if (roomDetailsData[roomData.name] && roomDetailsData[roomData.name].image) {
             modalRoomImage.src = roomDetailsData[roomData.name].image;
         }
-        
+
         // Set room highlight tag based on room type
         const highlightTag = document.querySelector('.room-highlight-tag');
         if (highlightTag) {
@@ -480,16 +487,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 highlightTag.style.background = 'linear-gradient(135deg, #f6d365, #fda085)';
             }
         }
-            
+
         // Update feature badges based on room type
         const featuresGrid = document.querySelector('.room-features-grid');
         if (featuresGrid && roomDetailsData[roomData.name]) {
             // Clear existing features
             featuresGrid.innerHTML = '';
-            
+
             // Get top 4 amenities for this room type
             const topAmenities = roomDetailsData[roomData.name].amenities.slice(0, 4);
-            
+
             // Add each amenity as a feature badge
             topAmenities.forEach(amenity => {
                 const featureBadge = document.createElement('div');
@@ -498,26 +505,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 featuresGrid.appendChild(featureBadge);
             });
         }
-        
+
         // Show modal with animation
         roomModal.classList.add('active');
         document.body.classList.add('menu-open');
     }
-    
+
     // Close modal functions
     function closeRoomModal() {
         roomModal.classList.remove('active');
         document.body.classList.remove('menu-open');
     }
-    
+
     if (modalClose) {
         modalClose.addEventListener('click', closeRoomModal);
     }
-    
+
     if (cancelBtn) {
         cancelBtn.addEventListener('click', closeRoomModal);
     }
-    
+
     // Redirect buttons
     if (proceedBtn) {
         proceedBtn.addEventListener('click', function() {
@@ -525,16 +532,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const checkIn = modalCheckin.textContent;
             const checkOut = modalCheckout.textContent;
             const duration = modalDuration.textContent;
-            
+
             // Get the per-night price from the room details data
             let nightlyPrice = 0;
             if (roomDetailsData[roomType]) {
                 nightlyPrice = parseInt(roomDetailsData[roomType].price.replace(/[^\d]/g, ''));
             }
-            
+
             // Get the total price from the modal
             const totalPrice = modalPrice.textContent.replace(/[^\d]/g, '');
-            
+
             // Encode parameters
             const params = new URLSearchParams({
                 roomType: roomType,
@@ -545,45 +552,45 @@ document.addEventListener('DOMContentLoaded', function() {
                 totalPrice: totalPrice,
                 autoOpen: 'true'
             });
-            
+
             // Redirect to room route with parameters
             window.location.href = `/room?${params.toString()}`;
         });
     }
-    
+
     if (viewOtherBtn) {
         viewOtherBtn.addEventListener('click', function() {
             window.location.href = '/room';
         });
     }
-    
+
     // Handle room selection from popup
     document.addEventListener('click', function(e) {
         if (e.target.classList.contains('room-select') || e.target.closest('.room-select')) {
             e.preventDefault();
-            
+
             // Find the room card that was clicked
             const roomCard = e.target.closest('.room-card');
             if (!roomCard) return;
-            
+
             // Find which room was clicked from our data
             const roomName = roomCard.querySelector('.room-name').textContent;
             const selectedRoom = roomsData.find(room => room.name === roomName);
-            
+
             // Get current check-in/out dates
             const checkIn = document.getElementById('check-in').value;
             const checkOut = document.getElementById('check-out').value;
-            
+
             // Calculate duration
             const checkInDate = new Date(checkIn);
             const checkOutDate = new Date(checkOut);
             const duration = Math.floor((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
-            
+
             // Show the modal
             showRoomModal(selectedRoom, checkIn, checkOut, duration);
         }
     });
-    
+
     // Close modal when clicking outside
     if (roomModal) {
         roomModal.addEventListener('click', function(e) {
@@ -592,7 +599,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+
     // Room Details Popup
     const roomDetailsPopup = document.getElementById('room-details-popup');
     const detailsPopupClose = document.getElementById('details-popup-close');
@@ -605,11 +612,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const popupRoomSize = document.getElementById('popup-room-size');
     const popupRoomAmenities = document.getElementById('popup-room-amenities');
     const popupBookNow = document.getElementById('popup-book-now');
-    
+
     function showRoomDetails(roomName) {
         const roomData = roomDetailsData[roomName];
         if (!roomData) return;
-        
+
         // Update popup content
         popupRoomImage.src = roomData.image;
         popupRoomTitle.textContent = roomName;
@@ -618,7 +625,7 @@ document.addEventListener('DOMContentLoaded', function() {
         popupRoomCapacity.textContent = roomData.capacity;
         popupRoomBed.textContent = roomData.bed;
         popupRoomSize.textContent = roomData.size;
-        
+
         // Generate amenities
         popupRoomAmenities.innerHTML = '';
         roomData.amenities.forEach(amenity => {
@@ -627,22 +634,22 @@ document.addEventListener('DOMContentLoaded', function() {
             amenityElement.innerHTML = `<i class="${amenity.icon}"></i> ${amenity.name}`;
             popupRoomAmenities.appendChild(amenityElement);
         });
-        
+
         // Show popup
         roomDetailsPopup.classList.add('active');
         document.body.classList.add('menu-open');
     }
-    
+
     // Close room details popup
     function closeRoomDetails() {
         roomDetailsPopup.classList.remove('active');
         document.body.classList.remove('menu-open');
     }
-    
+
     if (detailsPopupClose) {
         detailsPopupClose.addEventListener('click', closeRoomDetails);
     }
-    
+
     // Close popup when clicking outside
     if (roomDetailsPopup) {
         roomDetailsPopup.addEventListener('click', function(e) {
@@ -651,7 +658,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+
     // Book Now button in popup
     if (popupBookNow) {
         popupBookNow.addEventListener('click', function() {
@@ -661,43 +668,43 @@ document.addEventListener('DOMContentLoaded', function() {
                 name: roomName,
                 price: popupRoomPrice.textContent
             };
-            
+
             // Close details popup
             closeRoomDetails();
-            
+
             // Show booking modal
             const checkIn = document.getElementById('check-in').value;
             const checkOut = document.getElementById('check-out').value;
             const checkInDate = new Date(checkIn);
             const checkOutDate = new Date(checkOut);
             const duration = Math.floor((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24)) || 3;
-            
+
             showRoomModal(roomData, checkIn, checkOut, duration);
         });
     }
-    
+
     // Handle view details button clicks
     document.addEventListener('click', function(e) {
         if (e.target.classList.contains('view-room-btn') || e.target.closest('.view-room-btn')) {
             e.preventDefault();
-            
+
             // Find the room card that was clicked
             const roomCard = e.target.closest('.featured-room');
             if (!roomCard) return;
-            
+
             // Get room name
             const roomName = roomCard.querySelector('.room-title').textContent;
-            
+
             // Show room details
             showRoomDetails(roomName);
         }
     });
-    
+
     // Parse URL parameters to handle room links
     function handleRoomURLParameters() {
         const params = new URLSearchParams(window.location.search);
         const roomType = params.get('type');
-        
+
         if (roomType) {
             // Match URL parameter to room name
             let roomName;
@@ -721,7 +728,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     roomName = 'Single Room';
                     break;
             }
-            
+
             // If we have a matching room, show its details
             if (roomName && roomDetailsData[roomName]) {
                 // Wait a bit for the DOM to be fully loaded
@@ -731,7 +738,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
-    
+
     // Check for room parameters when page loads
     handleRoomURLParameters();
 });

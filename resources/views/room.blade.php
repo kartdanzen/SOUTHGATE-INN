@@ -16,6 +16,101 @@
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/room.css') }}">
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+    <style>
+        /* Inline styles for terms modal to ensure it works */
+        #termsPopup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+        #termsPopup.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .terms-popup-content {
+            background: white;
+            width: 90%;
+            max-width: 800px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 30px;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .terms-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: none;
+            background: none;
+        }
+        .terms-close:hover {
+            background: #f5f5f5;
+        }
+        .terms-popup-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: #006652;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .terms-popup-section {
+            margin-bottom: 24px;
+        }
+        .terms-popup-section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .terms-popup-section p {
+            margin-bottom: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #555;
+        }
+        .terms-popup-footer {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .terms-accept-btn {
+            background-color: #006652;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .terms-accept-btn:hover {
+            background-color: #00543f;
+        }
+        .terms-date {
+            color: #888;
+            font-size: 12px;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
     <!-- Header Section -->
@@ -140,10 +235,10 @@
             <div class="room-card">
                 <div class="room-image-container">
                     <img src="{{ asset('rooms/room3.jpg') }}" alt="Superior Room" class="room-image">
-                    <div class="room-price-tag">₱2,700/night</div>
+                    <div class="room-price-tag">₱2,500/night</div>
                 </div>
                 <div class="room-details">
-                    <h3 class="room-name">Superior Room</h3>
+                    <h3 class="room-name">Family Deluxe</h3>
                     <p class="room-description">Experience enhanced comfort in our premium rooms featuring upscale amenities and beautiful city views.</p>
 
                     <div class="room-features">
@@ -407,7 +502,7 @@
                         <label class="checkbox-label">
                             <input type="checkbox" name="terms_agreement" required>
                             <span class="checkbox-custom"></span>
-                            <span class="checkbox-text">I agree to the <a href="#" class="terms-link">terms and conditions</a> <span class="required">*</span></span>
+                            <span class="checkbox-text">I agree to the <a href="javascript:void(0);" onclick="showTermsPopup(event)" class="terms-link">terms and conditions</a> <span class="required">*</span></span>
                         </label>
                         @error('terms_agreement')
                             <span class="error-message">{{ $message }}</span>
@@ -462,9 +557,100 @@
         </div>
     </div>
 
+    <!-- Terms and Conditions Popup -->
+    <div id="termsPopup">
+        <div class="terms-popup-content">
+            <button class="terms-close" onclick="hideTermsPopup()"><i class="fas fa-times"></i></button>
+            <h2 class="terms-popup-title">Terms and Conditions</h2>
+
+            <div class="terms-popup-body">
+                <section class="terms-popup-section">
+                    <h3>1. Booking and Reservation Policy</h3>
+                    <p>1.1. All reservations must be guaranteed with a valid credit card or by advance payment.</p>
+                    <p>1.2. Rates are quoted per room per night, and are subject to availability and seasonal variations.</p>
+                    <p>1.3. Room rates include accommodations for the specified number of guests. Additional guests may be subject to extra charges.</p>
+                    <p>1.4. Reservations are confirmed upon receipt of a confirmation number or email from Southgate Inn.</p>
+                </section>
+
+                <section class="terms-popup-section">
+                    <h3>2. Check-in and Check-out</h3>
+                    <p>2.1. Standard check-in time is 2:00 PM and check-out time is 12:00 PM.</p>
+                    <p>2.2. Early check-in and late check-out are subject to availability and may incur additional charges.</p>
+                    <p>2.3. A valid government-issued photo ID is required at check-in.</p>
+                </section>
+
+                <section class="terms-popup-section">
+                    <h3>3. Cancellation and Modification Policy</h3>
+                    <p>3.1. Cancellations must be made at least 24 hours prior to the scheduled arrival date to avoid charges.</p>
+                    <p>3.2. Cancellations made less than 24 hours before arrival will incur a charge equivalent to one night's stay.</p>
+                    <p>3.3. No-shows will be charged for the first night of the reservation.</p>
+                    <p>3.4. Modifications to reservations are subject to availability and may result in rate changes.</p>
+                </section>
+
+                <section class="terms-popup-section">
+                    <h3>4. Payment Policy</h3>
+                    <p>4.1. Full payment is due upon check-in.</p>
+                    <p>4.2. We accept major credit cards, cash, and select digital payment methods.</p>
+                    <p>4.3. A credit card authorization or cash deposit may be required upon check-in for incidentals.</p>
+                </section>
+
+                <section class="terms-popup-section">
+                    <h3>5. Hotel Policies</h3>
+                    <p>5.1. Southgate Inn is a non-smoking establishment. Smoking in rooms will result in a cleaning fee.</p>
+                    <p>5.2. Pets are not allowed, with the exception of service animals.</p>
+                    <p>5.3. Guests are liable for any damage caused to hotel property during their stay.</p>
+                    <p>5.4. The hotel reserves the right to refuse service to anyone for legitimate reasons.</p>
+                </section>
+
+                <section class="terms-popup-section">
+                    <h3>6. Privacy Policy</h3>
+                    <p>6.1. Personal information collected during the reservation process is used solely for the purpose of processing and managing your booking.</p>
+                    <p>6.2. We do not sell, share, or distribute your personal information to third parties except as necessary to provide the requested services.</p>
+                </section>
+
+                <section class="terms-popup-section">
+                    <h3>7. General Provisions</h3>
+                    <p>7.1. These terms and conditions are subject to change without notice.</p>
+                    <p>7.2. By making a reservation at Southgate Inn, you agree to abide by all terms and policies in effect at the time of your stay.</p>
+                </section>
+            </div>
+
+            <div class="terms-popup-footer">
+                <span class="terms-date">Last updated: May 15, 2024</span>
+                <button class="terms-accept-btn" onclick="acceptTerms()">I Understand and Accept</button>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript -->
     <script src="{{ asset('js/navbar.js') }}"></script>
     <script src="{{ asset('js/room.js') }}"></script>
+
+    <script>
+        // Direct inline scripts for terms modal to ensure it works
+        function showTermsPopup(event) {
+            if (event) event.preventDefault();
+            document.getElementById('termsPopup').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideTermsPopup() {
+            document.getElementById('termsPopup').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function acceptTerms() {
+            // Check the terms checkbox
+            const checkbox = document.querySelector('input[name="terms_agreement"]');
+            if (checkbox) checkbox.checked = true;
+            hideTermsPopup();
+        }
+
+        // Close when clicking outside the modal content
+        document.getElementById('termsPopup').addEventListener('click', function(e) {
+            if (e.target === this) hideTermsPopup();
+        });
+    </script>
 
     @if($autoOpen == 'true' && $roomType)
     <script>
@@ -486,8 +672,8 @@
             if (!duration && checkInDate && checkOutDate && !isNaN(checkInDate) && !isNaN(checkOutDate)) {
                 duration = Math.floor((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
             }
-            
-            // Ensure we have a valid duration (at least 1 night)
+
+            // Ensure  na may valid duration (at least 1 night)
             duration = duration || 1;
 
             // Delay to ensure the DOM is fully loaded

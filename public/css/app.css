@@ -1,0 +1,51 @@
+/* Light theme (default) */
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --accent-color: #2563eb;
+  --border-color: #e5e7eb;
+  --card-bg: #ffffff;
+  --header-bg: #ffffff;
+  --footer-bg: #f3f4f6;
+  --input-bg: #ffffff;
+  --input-text: #333333;
+  --button-bg: #006652; /* Green button matches original design */
+  --button-text: #ffffff;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --section-title-color: #006652; /* Match original green */
+  --section-subtitle-color: #666666; /* Subtitle color for light mode */
+  --featured-bg: #ffffff; /* Background for featured sections */
+  --gray-section-bg: #f5f5f5; /* Gray background for alternate sections */
+  --card-text-color: #333333; /* Text in cards */
+  --card-subtitle-color: #555555; /* Subtitle in cards */
+  --feature-text-color: #555555; /* Feature text color */
+  --nav-bg: #ffffff; /* Navbar background */
+  --nav-text: #006652; /* Navbar text color - green */
+  --nav-active-bg: rgba(81, 150, 116, 0.15); /* Active nav background */
+  --nav-hover-bg: rgba(81, 150, 116, 0.08); /* Hover background */
+  --nav-underline: linear-gradient(to right, #006652, #4CAF50); /* Underline gradient */
+  --menu-bar-color: #006652; /* Hamburger menu bars */
+  --footer-text: #ffffff;
+  --footer-border: #006652;
+  --footer-heading: #006652;
+  --footer-icon: #006652;
+  --footer-input-bg: rgba(255,255,255,0.1);
+  --amenity-text: #555555; /* Text color for amenities */
+  --room-info-text: #333333; /* Room info text */
+  --room-overview-title: #333333; /* Room overview title */
+  --room-amenity-title: #333333; /* Amenities section title */
+  --popup-icon-color: #006652; /* Icons in popups */
+  --room-details-text: #333333; /* Room details text */
+}
+
+/* Apply base styles */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.section-container {
+  color: var(--text-primary);
+} 

@@ -136,7 +136,7 @@
                         <option value="birthday">Birthday Celebration</option>
                         <option value="corporate">Corporate Event</option>
                         <option value="reunion">Family Reunion</option>
-                        <option value="other">Other</option>
+                        <option value="other">Others</option>
                     </select>
                 </div>
 
@@ -184,6 +184,17 @@
                 <div class="form-group">
                     <label for="specialRequests" class="form-label">Special Requests or Notes</label>
                     <textarea id="specialRequests" name="specialRequests" class="form-control"></textarea>
+                </div>
+
+                <div class="form-group terms-agreement">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="terms_agreement" required>
+                        <span class="checkbox-custom"></span>
+                        <span class="checkbox-text">I agree to the <a href="javascript:void(0);" onclick="showTermsPopup(event)" class="terms-link">terms and conditions</a> <span class="required">*</span></span>
+                    </label>
+                    @error('terms_agreement')
+                        <span class="error-message">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <button type="submit" class="submit-btn">Submit Booking Request</button>
@@ -249,7 +260,7 @@
                     </div>
 
                     <div class="popup-action-container">
-                        <button class="popup-book-btn" id="booking-success-btn">Return to Home</button>
+                        <button class="popup-book-btn" id="booking-success-btn">Return to Page</button>
                     </div>
                 </div>
             </div>
@@ -260,5 +271,247 @@
     <!-- JavaScript -->
     <script src="{{ asset('js/navbar.js') }}"></script>
     <script src="{{ asset('js/event.js') }}"></script>
+
+    <style>
+        /* Terms modal styles */
+        #termsPopup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+        #termsPopup.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .terms-popup-content {
+            background: white;
+            width: 90%;
+            max-width: 800px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 30px;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .terms-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: none;
+            background: none;
+        }
+        .terms-close:hover {
+            background: #f5f5f5;
+        }
+        .terms-popup-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: #006652;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .terms-popup-section {
+            margin-bottom: 24px;
+        }
+        .terms-popup-section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .terms-popup-section p {
+            margin-bottom: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #555;
+        }
+        .terms-popup-footer {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .terms-accept-btn {
+            background-color: #006652;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .terms-accept-btn:hover {
+            background-color: #00543f;
+        }
+        .terms-date {
+            color: #888;
+            font-size: 12px;
+            font-style: italic;
+        }
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .checkbox-label input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        .checkbox-custom {
+            position: relative;
+            height: 20px;
+            width: 20px;
+            background-color: #eee;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        .checkbox-label:hover input ~ .checkbox-custom {
+            background-color: #ccc;
+        }
+        .checkbox-label input:checked ~ .checkbox-custom {
+            background-color: #006652;
+            border-color: #006652;
+        }
+        .checkbox-custom:after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 7px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        .checkbox-label input:checked ~ .checkbox-custom:after {
+            display: block;
+        }
+        .checkbox-text {
+            font-size: 14px;
+            color: #333;
+        }
+        .terms-link {
+            color: #006652;
+            text-decoration: underline;
+        }
+        .required {
+            color: #e74c3c;
+        }
+    </style>
+
+    <!-- Terms and Conditions Popup -->
+    <div id="termsPopup">
+        <div class="terms-popup-content">
+            <button class="terms-close" onclick="hideTermsPopup()"><i class="fas fa-times"></i></button>
+            <h2 class="terms-popup-title">Event Booking Terms and Conditions</h2>
+
+            <div class="terms-popup-body">
+                <section class="terms-popup-section">
+                    <h3>1. Event Booking & Reservation Policy</h3>
+                    <p>1.1. All event bookings must be confirmed with a valid credit card or by advance payment.</p>
+                    <p>1.2. Event packages are priced as indicated and are subject to availability and seasonal variations.</p>
+                    <p>1.3. Package rates include amenities for the specified event type. Additional services may incur extra charges.</p>
+                    <p>1.4. Reservations are confirmed upon receipt of a confirmation number or email from Southgate Inn.</p>
+                </section>
+
+                <section class="terms-popup-section">
+                    <h3>2. Event Setup and Timing</h3>
+                    <p>2.1. Standard event duration is as specified in each package.</p>
+                    <p>2.2. Extended event hours are subject to availability and will incur additional charges.</p>
+                    <p>2.3. Setup time before the event must be arranged in advance with the event coordinator.</p>
+                </section>
+
+                <section class="terms-popup-section">
+                    <h3>3. Cancellation and Modification Policy</h3>
+                    <p>3.1. Cancellations must be made at least 14 days prior to the scheduled event date to avoid charges.</p>
+                    <p>3.2. Cancellations made less than 14 days before the event will incur a charge equivalent to 30% of the total booking.</p>
+                    <p>3.3. Cancellations made less than 7 days before the event will incur a charge of 50% of the total booking.</p>
+                    <p>3.4. Modifications to event details are subject to availability and may result in rate changes.</p>
+                </section>
+
+                <section class="terms-popup-section">
+                    <h3>4. Payment Policy</h3>
+                    <p>4.1. A non-refundable deposit of 20% is required to secure your booking.</p>
+                    <p>4.2. Full payment is due 7 days prior to the event date.</p>
+                    <p>4.3. We accept major credit cards, bank transfers, and select digital payment methods.</p>
+                </section>
+
+                <section class="terms-popup-section">
+                    <h3>5. Event Policies</h3>
+                    <p>5.1. Decorations must be approved in advance and must not damage the venue.</p>
+                    <p>5.2. The client is responsible for the behavior of their guests and any damages caused.</p>
+                    <p>5.3. Southgate Inn reserves the right to terminate any event that violates our policies or local regulations.</p>
+                    <p>5.4. External vendors must be approved by Southgate Inn management.</p>
+                </section>
+
+                <section class="terms-popup-section">
+                    <h3>6. Force Majeure</h3>
+                    <p>6.1. Southgate Inn shall not be liable for failure to perform its obligations due to circumstances beyond its reasonable control, including but not limited to acts of God, natural disasters, pandemic restrictions, or government regulations.</p>
+                </section>
+
+                <section class="terms-popup-section">
+                    <h3>7. General Provisions</h3>
+                    <p>7.1. These terms and conditions are subject to change without notice.</p>
+                    <p>7.2. By booking an event at Southgate Inn, you agree to abide by all terms and policies in effect at the time of your event.</p>
+                </section>
+            </div>
+
+            <div class="terms-popup-footer">
+                <span class="terms-date">Last updated: May 15, 2024</span>
+                <button class="terms-accept-btn" onclick="acceptTerms()">I Understand and Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Terms modal functions
+        function showTermsPopup(event) {
+            if (event) event.preventDefault();
+            document.getElementById('termsPopup').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideTermsPopup() {
+            document.getElementById('termsPopup').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function acceptTerms() {
+            // Check the terms checkbox
+            const checkbox = document.querySelector('input[name="terms_agreement"]');
+            if (checkbox) checkbox.checked = true;
+            hideTermsPopup();
+        }
+
+        // Close when clicking outside the modal content
+        document.getElementById('termsPopup').addEventListener('click', function(e) {
+            if (e.target === this) hideTermsPopup();
+        });
+    </script>
 </body>
 </html>

@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const eventType = this.getAttribute('data-event');
             console.log("Proceeding with event type:", eventType);
             
-            // Make sure eventType is one of the valid options in the event.html dropdown
+            // Make sure eventType is one of the valid options in the event dropdown
             // Valid options are: wedding, birthday, corporate, reunion, other
             const validEventType = ['wedding', 'birthday', 'corporate', 'reunion', 'other'].includes(eventType) 
                 ? eventType 
@@ -243,8 +243,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
             console.log("Using eventType:", validEventType);
             
-            // Redirect to event.html with the event type as a parameter and jump to booking form
-            window.location.href = `event.html?eventType=${validEventType}#booking-form`;
+            // Redirect to the Laravel event route with the event type as a parameter
+            window.location.href = `/event?eventType=${validEventType}#booking-form`;
         });
     }
     

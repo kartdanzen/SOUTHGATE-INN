@@ -22,6 +22,7 @@
     <header class="header">
         @include('nav')
     </header>
+    <div class="menu-overlay"></div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -428,7 +429,7 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="{{ asset('js/navbar.js') }}"></script>
+    <script src="{{ asset('js/menu-fix.js') }}"></script>
     <script src="{{ asset('js/index.room.js') }}"></script>
     <script src="{{ asset('js/index.event.js') }}"></script>
 </body>

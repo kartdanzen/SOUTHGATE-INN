@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Function to ensure all mobile menu elements exist
-    function ensureMobileMenuElements() {
+    function ensureMobileMenuElements() {   
         // Only create a new menu overlay if there isn't one
         if (!document.querySelector('.menu-overlay') && document.body) {
             console.log('Creating missing menu overlay');

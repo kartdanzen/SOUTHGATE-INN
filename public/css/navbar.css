@@ -146,7 +146,21 @@
     height: 3px;
     margin: 5px auto;
     background-color: #006652;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transform-origin: center;
+}
+
+.menu-toggle.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.menu-toggle.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
 }
 
 .menu-overlay {
@@ -165,9 +179,8 @@
 }
 
 .menu-overlay.active {
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+    opacity: 1;
+    visibility: visible;
 }
 
 .mobile-close-btn {
@@ -208,18 +221,7 @@
         top: 50%;
         transform: translateY(-50%);
         z-index: 1002;
-    }
-    
-    .menu-toggle.active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-    }
-    
-    .menu-toggle.active .bar:nth-child(2) {
-        opacity: 0;
-    }
-    
-    .menu-toggle.active .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
+        padding: 15px;
     }
     
     .nav {
@@ -237,11 +239,10 @@
         overflow-y: auto;
         box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
         z-index: 1001;
-        display: flex !important;
     }
     
     .nav.open {
-        right: 0 !important;
+        right: 0;
     }
     
     .nav-item {
@@ -257,7 +258,8 @@
         transition: all 0.3s ease;
     }
     
-    .nav-item:hover, .nav-item:focus {
+    .nav-item:hover, 
+    .nav-item:focus {
         background-color: rgba(81, 150, 116, 0.1);
         border-left: 4px solid #006652;
         transform: translateX(5px);
@@ -272,10 +274,6 @@
         font-weight: bold;
     }
     
-    .nav-item.active .underline {
-        display: none;
-    }
-    
     .nav-item i {
         margin-right: 15px;
         width: 24px;
@@ -288,36 +286,19 @@
         transform: translateX(3px);
     }
     
-    .mobile-close-btn {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        top: 25px;
-        right: 25px;
-        background: none;
-        border: none;
-        font-size: 28px;
-        color: #006652;
-        cursor: pointer;
-        z-index: 1002;
-    }
-    
-    .menu-overlay.active {
-        display: block;
-    }
-    
     body.menu-open {
-        overflow: hidden !important;
-    }
-    
-    body.menu-open .menu-overlay {
-        display: block;
-        opacity: 1;
-        visibility: visible;
+        overflow: hidden;
     }
 }
 
+/* Prevent body scroll when menu is open */
 body.menu-open {
     overflow: hidden;
+}
+
+/* Ensure menu is visible on desktop */
+@media (min-width: 1201px) {
+    .nav {
+        display: flex !important;
+    }
 } 

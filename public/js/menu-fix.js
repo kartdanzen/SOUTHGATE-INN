@@ -1,37 +1,40 @@
-// Direct fix for hamburger menu issues
+// Improved hamburger menu functionality
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Menu fix script loaded');
-    
     // Get menu elements
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav');
     const menuOverlay = document.querySelector('.menu-overlay');
-    let closeBtn = document.querySelector('.mobile-close-btn');
     
-    // Create close button if it doesn't exist
-    if (!closeBtn && nav) {
-        closeBtn = document.createElement('button');
-        closeBtn.className = 'mobile-close-btn';
-        closeBtn.setAttribute('aria-label', 'Close menu');
-        
-        const icon = document.createElement('i');
-        icon.className = 'fas fa-times';
-        closeBtn.appendChild(icon);
-        
-        nav.appendChild(closeBtn);
-        console.log('Created missing close button');
+    // Function to open menu
+    function openMenu() {
+        menuToggle.classList.add('active');
+        nav.classList.add('open');
+        nav.style.right = '0';
+        menuOverlay.style.display = 'block';
+        menuOverlay.classList.add('active');
+        document.body.classList.add('menu-open');
+        document.body.style.overflow = 'hidden';
     }
     
-    console.log('Menu elements:', {
-        toggle: menuToggle ? true : false,
-        nav: nav ? true : false,
-        overlay: menuOverlay ? true : false,
-        closeBtn: closeBtn ? true : false
-    });
+    // Function to close menu
+    function closeMenu() {
+        menuToggle.classList.remove('active');
+        nav.classList.remove('open');
+        nav.style.right = '-100%';
+        menuOverlay.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        document.body.style.overflow = '';
+        
+        // Hide overlay after animation
+        setTimeout(() => {
+            if (!menuOverlay.classList.contains('active')) {
+                menuOverlay.style.display = 'none';
+            }
+        }, 300);
+    }
     
-    // Fix menu overlay styles
+    // Initialize menu state
     if (menuOverlay) {
-        // Force initial styles
         menuOverlay.style.display = 'none';
         menuOverlay.style.position = 'fixed';
         menuOverlay.style.top = '0';
@@ -41,96 +44,61 @@ document.addEventListener('DOMContentLoaded', function() {
         menuOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
         menuOverlay.style.zIndex = '999';
         menuOverlay.style.backdropFilter = 'blur(3px)';
+        menuOverlay.style.transition = 'opacity 0.3s ease';
     }
     
-    // Ensure toggle button is working
+    // Menu toggle click handler
     if (menuToggle) {
-        // Remove previous event listeners by cloning and replacing
-        const newMenuToggle = menuToggle.cloneNode(true);
-        menuToggle.parentNode.replaceChild(newMenuToggle, menuToggle);
-        
-        // Add event listener to the new button
-        newMenuToggle.addEventListener('click', function(e) {
+        menuToggle.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             
-            console.log('Menu toggle clicked');
-            this.classList.toggle('active');
-            
-            if (nav) {
-                nav.classList.toggle('open');
-                console.log('Nav toggled:', nav.classList.contains('open'));
+            if (nav.classList.contains('open')) {
+                closeMenu();
+            } else {
+                openMenu();
             }
-            
-            if (menuOverlay) {
-                menuOverlay.classList.toggle('active');
-                
-                // Force display property
-                if (menuOverlay.classList.contains('active')) {
-                    menuOverlay.style.display = 'block';
-                } else {
-                    setTimeout(() => {
-                        if (!menuOverlay.classList.contains('active')) {
-                            menuOverlay.style.display = 'none';
-                        }
-                    }, 300);
-                }
-            }
-            
-            document.body.classList.toggle('menu-open');
         });
     }
     
-    // Fix close button if present
-    if (closeBtn) {
-        // Remove previous event listeners
-        const newCloseBtn = closeBtn.cloneNode(true);
-        closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
-        
-        // Add new event listener
-        newCloseBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            console.log('Close button clicked');
-            if (menuToggle) menuToggle.classList.remove('active');
-            if (nav) nav.classList.remove('open');
-            if (menuOverlay) {
-                menuOverlay.classList.remove('active');
-                setTimeout(() => {
-                    if (!menuOverlay.classList.contains('active')) {
-                        menuOverlay.style.display = 'none';
-                    }
-                }, 300);
-            }
-            
-            document.body.classList.remove('menu-open');
-        });
-    }
-    
-    // Fix overlay click behavior
+    // Overlay click handler
     if (menuOverlay) {
-        // Remove previous event listeners
-        const newMenuOverlay = menuOverlay.cloneNode(true);
-        menuOverlay.parentNode.replaceChild(newMenuOverlay, menuOverlay);
-        
-        // Add new event listener
-        newMenuOverlay.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            console.log('Overlay clicked');
-            if (menuToggle) menuToggle.classList.remove('active');
-            if (nav) nav.classList.remove('open');
-            newMenuOverlay.classList.remove('active');
-            
-            setTimeout(() => {
-                if (!newMenuOverlay.classList.contains('active')) {
-                    newMenuOverlay.style.display = 'none';
-                }
-            }, 300);
-            
-            document.body.classList.remove('menu-open');
+        menuOverlay.addEventListener('click', function(e) {
+            if (e.target === menuOverlay) {
+                closeMenu();
+            }
         });
+    }
+    
+    // Close menu when clicking nav items
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            if (window.innerWidth <= 1200) {
+                closeMenu();
+            }
+        });
+    });
+    
+    // Close menu on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && nav.classList.contains('open')) {
+            closeMenu();
+        }
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 1200) {
+            closeMenu();
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // Double-check menu state on page load
+    if (nav.classList.contains('open')) {
+        openMenu();
+    } else {
+        closeMenu();
     }
 });     

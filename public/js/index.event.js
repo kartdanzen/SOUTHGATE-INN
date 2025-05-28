@@ -8,58 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return `${year}-${month}-${day}`;
     };
 
-    // Mobile Menu Toggle handling - shared functionality
-    const setupMobileMenu = () => {
-        const menuToggle = document.querySelector('.menu-toggle');
-        const nav = document.querySelector('.nav');
-        const menuOverlay = document.querySelector('.menu-overlay');
-        const closeBtn = document.querySelector('.mobile-close-btn');
-        const navItems = document.querySelectorAll('.nav-item');
-        
-        function closeMenu() {
-            menuToggle.classList.remove('active');
-            nav.classList.remove('open');
-            menuOverlay.classList.remove('active');
-            document.body.classList.remove('menu-open');
-        }
-        
-        if (menuToggle) {
-            menuToggle.addEventListener('click', function() {
-                this.classList.toggle('active');
-                nav.classList.toggle('open');
-                menuOverlay.classList.toggle('active');
-                document.body.classList.toggle('menu-open');
-            });
-        }
-        
-        if (closeBtn) {
-            closeBtn.addEventListener('click', function() {
-                closeMenu();
-            });
-        }
-        
-        if (menuOverlay) {
-            menuOverlay.addEventListener('click', function() {
-                closeMenu();
-            });
-        }
-        
-        
-        // Set active nav item based on current page
-        const currentPage = window.location.pathname.split('/').pop();
-        navItems.forEach(item => {
-            const href = item.getAttribute('href');
-            if (currentPage === href || (currentPage === '' && href === 'index.html')) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('active');
-            }
-        });
-    };
-
-    // Initialize mobile menu
-    setupMobileMenu();
-
     // Event data
     const eventData = {
         wedding: {

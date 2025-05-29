@@ -741,4 +741,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Check for room parameters when page loads
     handleRoomURLParameters();
+
+    // Parallax Effect for Featured Rooms
+    const featuredRooms = document.querySelectorAll('.featured-grid .featured-room');
+    if (featuredRooms.length >= 3) {
+        // Set initial transform for each room
+        featuredRooms[0].style.transform = 'translateX(-80px)';
+        featuredRooms[1].style.transform = 'translateY(80px)';
+        featuredRooms[2].style.transform = 'translateX(80px)';
+        featuredRooms[0].style.opacity = '0';
+        featuredRooms[1].style.opacity = '0';
+        featuredRooms[2].style.opacity = '0';
+
+        // Add transition
+        [0,1,2].forEach(i => {
+            featuredRooms[i].style.transition = 'transform 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 1s';
+        });
+
+        // Intersection Observer to trigger animation
+        const observer = new window.IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const idx = Array.from(featuredRooms).indexOf(entry.target);
+                    entry.target.style.transform = 'translateX(0) translateY(0)';
+                    entry.target.style.opacity = '1';
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.4 });
+
+        [0,1,2].forEach(i => observer.observe(featuredRooms[i]));
+    }
 });

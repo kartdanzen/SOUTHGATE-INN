@@ -619,11 +619,16 @@ body.menu-open {
     gap: 30px;
 }
 
+/* Parallax effect for first three featured rooms */
+.featured-grid .featured-room {
+    will-change: transform, opacity;
+}
+
 .featured-room {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.6s, box-shadow 0.6s;
     background-color: #fff;
     position: relative;
 }
@@ -1962,4 +1967,9 @@ body.menu-open {
     .event-booking-label {
         min-width: 100px;
     }
+}
+
+/* Parallax effect for featured events */
+.featured-grid .event-card {
+    will-change: transform, opacity;
 } 

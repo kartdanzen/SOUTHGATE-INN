@@ -1045,3 +1045,25 @@ body.menu-open {
     }
 }
 
+/* Parallax in from left for featured post */
+.parallax-in-left {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 1s;
+}
+.blog-featured.parallax-init {
+  opacity: 0;
+  transform: translateX(-80px);
+}
+
+/* Parallax in from left for all blog cards */
+.blog-card.parallax-init {
+  opacity: 0;
+  transform: translateX(-80px);
+}
+.blog-card.parallax-in-left {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+  transition: transform 3s cubic-bezier(0.22, 1, 0.36, 1), opacity 1s;
+}
+

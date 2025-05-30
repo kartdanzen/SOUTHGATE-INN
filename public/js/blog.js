@@ -136,4 +136,42 @@ document.addEventListener('DOMContentLoaded', function() {
             closeModal();
         }
     });
+    
+    // Parallax  for featured post
+    const featured = document.querySelector('.blog-featured');
+    if (featured) {
+        featured.classList.add('parallax-init');
+        const observer = new window.IntersectionObserver(
+            (entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        featured.classList.add('parallax-in-left');
+                        featured.classList.remove('parallax-init');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.2 }
+        );
+        observer.observe(featured);
+    }
+    
+    // Parallax for  blog cards
+    const blogCards = document.querySelectorAll('.blog-card');
+    if (blogCards.length) {
+        blogCards.forEach(card => card.classList.add('parallax-init'));
+        const cardObserver = new window.IntersectionObserver(
+            (entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('parallax-in-left');
+                        entry.target.classList.remove('parallax-init');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.2 }
+        );
+        blogCards.forEach(card => cardObserver.observe(card));
+    }
 });

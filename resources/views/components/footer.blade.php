@@ -59,4 +59,5 @@
     <div class="footer-bottom">
         <p>&copy; {{ date('Y') }} Southgate Inn. All Rights Reserved.</p>
     </div>
+    <script src="{{ asset('js/footer.js') }}"></script>
 </footer>       

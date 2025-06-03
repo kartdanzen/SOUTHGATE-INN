@@ -210,3 +210,10 @@
         font-size: 1.3rem !important;
     }
 }
+/* Parallax effect for featured events */
+.footer-column,
+.footer-contact,
+.footer-links,
+.footer-services {
+    will-change: transform, opacity;
+} 

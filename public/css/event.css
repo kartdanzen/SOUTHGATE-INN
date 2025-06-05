@@ -61,7 +61,7 @@ body.menu-open {
     font-weight: 700;
     color: white;
     margin-bottom: 20px;
-    text-shadow: 
+    text-shadow:
         0 0 5px rgba(255, 255, 255, 0.5),
         0 0 10px rgba(255, 255, 255, 0.3),
         0 0 15px rgba(255, 255, 255, 0.2),
@@ -73,7 +73,7 @@ body.menu-open {
 
 @keyframes eventGlow {
     from {
-        text-shadow: 
+        text-shadow:
             0 0 5px rgba(255, 255, 255, 0.5),
             0 0 10px rgba(255, 255, 255, 0.3),
             0 0 15px rgba(255, 255, 255, 0.2),
@@ -82,7 +82,7 @@ body.menu-open {
             0 2px 4px rgba(0, 0, 0, 0.3);
     }
     to {
-        text-shadow: 
+        text-shadow:
             0 0 10px rgba(255, 255, 255, 0.6),
             0 0 20px rgba(255, 255, 255, 0.4),
             0 0 30px rgba(255, 255, 255, 0.3),
@@ -478,29 +478,29 @@ textarea.form-control {
     .events-hero {
         height: 450px;
     }
-    
+
     .events-hero-title {
         font-size: 42px;
-        text-shadow: 
+        text-shadow:
             0 0 5px rgba(255, 255, 255, 0.5),
             0 0 10px rgba(255, 255, 255, 0.2),
             0 0 15px rgba(0, 102, 82, 0.1),
             0 2px 4px rgba(0, 0, 0, 0.3);
         animation: none;
     }
-    
+
     .events-hero-subtitle {
         font-size: 16px;
     }
-    
+
     .event-types-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .form-row {
         flex-direction: column;
     }
-    
+
     .booking-form {
         padding: 20px;
     }
@@ -510,10 +510,10 @@ textarea.form-control {
     .events-hero {
         height: 350px;
     }
-    
+
     .events-hero-title {
         font-size: 32px;
-        text-shadow: 
+        text-shadow:
             0 0 5px rgba(255, 255, 255, 0.4),
             0 2px 4px rgba(0, 0, 0, 0.3);
     }
@@ -762,39 +762,39 @@ textarea.form-control {
     .popup-body {
         max-height: 70vh;
     }
-    
+
     .popup-image-container {
         height: 220px;
     }
-    
+
     .popup-event-img {
         height: 100%;
     }
-    
+
     .popup-event-title {
         font-size: 1.8rem;
     }
-    
+
     .popup-event-price {
         font-size: 1.3rem;
     }
-    
+
     .popup-event-description {
         font-size: 1.05rem;
     }
-    
+
     .popup-features {
         padding: 20px;
     }
-    
+
     .popup-event-features {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .popup-action-container {
         margin-top: 12px;
     }
-    
+
     .popup-book-btn {
         padding: 14px 30px;
     }
@@ -805,15 +805,15 @@ textarea.form-control {
     .popup-body {
         padding: 16px 20px;
     }
-    
+
     .popup-image-container {
         height: 180px;
     }
-    
+
     .popup-event-img {
         height: 100%;
     }
-    
+
     .popup-book-btn {
         width: 100%;
     }
@@ -825,19 +825,19 @@ textarea.form-control {
         max-width: 90%;
         width: 100%;
     }
-    
+
     .popup-body {
         padding: 14px 16px;
     }
-    
+
     .popup-image-container {
         height: 150px;
     }
-    
+
     .popup-event-img {
         height: 100%;
     }
-    
+
     .popup-event-features {
         grid-template-columns: 1fr;
     }
@@ -848,35 +848,35 @@ textarea.form-control {
     .popup-image-container {
         height: 130px;
     }
-    
+
     .popup-event-img {
         height: 100%;
     }
-    
+
     .popup-event-title {
         font-size: 1.4rem;
     }
-    
+
     .popup-event-price {
         font-size: 1.1rem;
     }
-    
+
     .popup-event-description {
         font-size: 0.95rem;
     }
-    
+
     .popup-features {
         padding: 12px;
     }
-    
+
     .popup-features h4 {
         font-size: 1rem;
     }
-    
+
     .popup-event-features li {
         font-size: 0.9rem;
     }
-    
+
     .popup-book-btn {
         padding: 10px 20px;
         font-size: 0.95rem;
@@ -1102,4 +1102,8 @@ textarea.form-control {
 .terms-conditions a:hover {
     text-decoration: underline;
 }
-
+/* Parallax */
+.event-types-grid,
+.event-type-card {
+will-change: transform, opacity;
+}

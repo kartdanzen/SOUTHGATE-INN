@@ -88,7 +88,7 @@ function updateFormStep(step) {
     const formSteps = document.querySelector('.form-steps');
     if (formSteps) {
         formSteps.setAttribute('data-step', step);
-        
+
         // Update active class on step indicators
         const steps = formSteps.querySelectorAll('.step');
         steps.forEach((stepEl, index) => {
@@ -600,13 +600,13 @@ document.addEventListener('DOMContentLoaded', function() {
             successPopup.classList.remove('active');
             successPopup.classList.remove('exiting');
             successPopup.style.display = 'none'; // Ensure display is set to none
-            
+
             // Make sure any overlay is removed or hidden
             const overlays = document.querySelectorAll('.popup-overlay');
             overlays.forEach(overlay => {
                 overlay.style.display = 'none';
             });
-            
+
             // Restore background scrolling
             document.body.style.overflow = 'auto';
             document.body.style.pointerEvents = 'auto'; // Ensure pointer events are enabled
@@ -680,7 +680,7 @@ function closeEventDetailsPopup() {
         overlays.forEach(overlay => {
             overlay.style.display = 'none';
         });
-        
+
         // Reset the form steps if needed, but DON'T reset the form values
         const formSteps = document.querySelector('.form-steps');
         if (formSteps) {
@@ -707,3 +707,33 @@ function formatReadableDate(dateString) {
         day: 'numeric'
     });
 }
+
+    //Parallax Effect for Featured Events
+    const parallaxEventCards = document.querySelectorAll('.event-types-grid .event-type-card');
+    if (parallaxEventCards.length >= 4) {
+        parallaxEventCards[0].style.transform = 'translateX(-80px)'; // left
+        parallaxEventCards[1].style.transform = 'translateY(80px)'; // below
+        parallaxEventCards[2].style.transform = 'translateX(80px)';  // right
+        parallaxEventCards[3].style.transform = 'translateX(-80px)'; // left
+        parallaxEventCards[0].style.opacity = '0';
+        parallaxEventCards[1].style.opacity = '0';
+        parallaxEventCards[2].style.opacity = '0';
+        parallaxEventCards[3].style.opacity = '0';
+
+        [0,1,2,3].forEach(i => {
+            parallaxEventCards[i].style.transition = 'transform 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 1s';
+        });
+
+        const observer = new window.IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transform = 'translateX(0) translateY(0)';
+                    entry.target.style.opacity = '1';
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.4 });
+
+        [0,1,2,3].forEach(i => observer.observe(parallaxEventCards[i]));
+    }
+
